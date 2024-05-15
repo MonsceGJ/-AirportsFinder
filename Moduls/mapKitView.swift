@@ -5,6 +5,8 @@
 //  Created by monscerrat gutierrez on 14/05/24.
 //
 
+
+
 import SwiftUI
 import MapKit
 
@@ -21,20 +23,26 @@ struct MapView: UIViewRepresentable {
 struct tabBarView: View {
     var body: some View{
         TabView{
-            MapContentView()
+            mapContentView()
                 .tabItem {
-                    Image(systemName: "map.circle")
+                    Image(systemName: "map.fill")
                     Text("mapa")
                 }
             listView()
                 .tabItem {
-                    Image(systemName: "list.bullet.circle")
+                    Image(systemName: "square.fill")
                     Text("Lista")
                 }
         }
     }
 }
 
+struct mapContentView: View {
+    var body: some View {
+        MapView()
+           // .edgesIgnoringSafeArea(.all)
+    }
+}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
@@ -42,21 +50,6 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
-struct MapContentView: View {
-    // Instancia de tu ViewModel
-    @ObservedObject var airportsViewModel = AirportViewModel(apiClient: APIClient())
-    
-    var body: some View {
-        
-        // Llama a la función fetchData al aparecer la vista
-        MapView()
-            .onAppear {
-                airportsViewModel.searchAirports(forCountry: "BE")
-            }
-    }
-}
-
-
 #Preview {
-    MapContentView()
+    mapContentView()
 }

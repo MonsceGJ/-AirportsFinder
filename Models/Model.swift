@@ -15,7 +15,7 @@ import Foundation
 
 // MARK: - Airport
 struct Airport: Codable {
-    let longitudeDeg: String
+    let longitudeDeg: String?
     let otherName: String?
     let iataCode, elevationFt: String
     let isAvailable: Bool
@@ -28,7 +28,7 @@ struct Airport: Codable {
     let isoCountry, typeA: String
     let wikipediaLink: String
     let isoRegion, name, keywords, municipality: String
-    let latitudeDege: String
+    let latitudeDege: String?
     let code: String?
     let scheduledService, gpsCode: String
 

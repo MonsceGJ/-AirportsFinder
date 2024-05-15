@@ -21,6 +21,8 @@ struct AirportListView: View {
                 
              
                 Button(action: {
+                    viewModel.searchAirports(forCountry: countrySearchText)
+
                     isMapScreenPresented = true
                 }) {
                     Text("Buscar")

@@ -27,7 +27,7 @@ struct AirportListView: View {
                 }
                 .padding()
                 
-                NavigationLink(destination: MapView(), isActive: $isMapScreenPresented) {
+                NavigationLink(destination: tabBarView(), isActive: $isMapScreenPresented) {
                     EmptyView()
                 }
                 

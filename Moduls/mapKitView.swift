@@ -18,19 +18,45 @@ struct MapView: UIViewRepresentable {
     }
 }
 
-struct mapContentView: View {
-    var body: some View {
-        MapView()
-            .edgesIgnoringSafeArea(.all)
+struct tabBarView: View {
+    var body: some View{
+        TabView{
+            MapContentView()
+                .tabItem {
+                    Image(systemName: "map.circle")
+                    Text("mapa")
+                }
+            listView()
+                .tabItem {
+                    Image(systemName: "list.bullet.circle")
+                    Text("Lista")
+                }
+        }
     }
 }
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        mapContentView()
+        tabBarView()
     }
 }
 
+struct MapContentView: View {
+    // Instancia de tu ViewModel
+    @ObservedObject var airportsViewModel = AirportViewModel(apiClient: APIClient())
+    
+    var body: some View {
+        
+        // Llama a la función fetchData al aparecer la vista
+        MapView()
+            .onAppear {
+                airportsViewModel.searchAirports(forCountry: "BE")
+            }
+    }
+}
+
+
 #Preview {
-    mapContentView()
+    MapContentView()
 }

@@ -6,10 +6,17 @@
 //
 
 import SwiftUI
+
+
+
 struct ContentView: View {
+   
+    @StateObject var airportViewModel = AirportViewModel(apiClient: APIClient())
+    
     var body: some View {
-        let searchRepository = searchRepository()
-     let viewModel = FirstScreenViewModel(searchRepository: searchRepository)
-        return FirstScreen(viewModel: viewModel)
-  }
+        NavigationView {
+            AirportListView(viewModel: airportViewModel)
+                .navigationTitle("Buscar Aeropuertos")
+        }
+    }
 }

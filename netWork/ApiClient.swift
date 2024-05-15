@@ -7,28 +7,35 @@
 
 import Foundation
 
-func fetchAirportsData() {
-    
-    let headers = [
-        "X-RapidAPI-Key": "SIGN-UP-FOR-KEY",
-        "X-RapidAPI-Host": "airports-finder1.p.rapidapi.com"
-    ]
-    
-    let request = NSMutableURLRequest(url: NSURL(string: "https://airports-finder1.p.rapidapi.com/airports/coordinates/32.9222/-97.0409")! as URL,
-                                      cachePolicy: .useProtocolCachePolicy,
-                                      timeoutInterval: 10.0)
-    request.httpMethod = "GET"
-    request.allHTTPHeaderFields = headers
-    
-    let session = URLSession.shared
-    let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
-        if (error != nil) {
-            print(error as Any)
-        } else {
-            let httpResponse = response as? HTTPURLResponse
-            print(httpResponse)
-        }
-    })
-    
-    dataTask.resume()
+
+import Foundation
+
+class APIClient {
+    func fetchData() {
+        let headers = [
+            "X-RapidAPI-Key": "c2bcfa61f1mshf2abcf111b8af04p11138ejsnd5ae171d439b",
+            "X-RapidAPI-Host": "radarflight.p.rapidapi.com"
+        ]
+        
+        let request = NSMutableURLRequest(url: NSURL(string: "https://radarflight.p.rapidapi.com/api/v1/airport/BE/availables")! as URL,
+                                          cachePolicy: .useProtocolCachePolicy,
+                                          timeoutInterval: 10.0)
+        request.httpMethod = "GET"
+        request.allHTTPHeaderFields = headers
+        
+        let session = URLSession.shared
+        let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+            if let error = error {
+                print("Error: \(error)")
+            } else if let httpResponse = response as? HTTPURLResponse {
+                print("Response: \(httpResponse)")
+                
+                if let data = data {
+                    // Aquí puedes manejar los datos recibidos, por ejemplo, decodificarlos si son JSON
+                }
+            }
+        })
+        
+        dataTask.resume()
+    }
 }

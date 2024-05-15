@@ -9,46 +9,41 @@ import Foundation
 import SwiftUI
 
 
-protocol SearchRepositoryProtocol {
-    func search(whiRadius radius: Double) -> [String]
-}
+//protocol SearchRepositoryProtocol {
+//    func search(whiRadius radius: Double) -> [String]
+//}
+//
+//class searchRepository: SearchRepositoryProtocol{
+//    func search(whiRadius radius: Double) -> [String] {
+//        return[""]
+//    }
+//}
+//
+//class FirstScreenViewModel: ObservableObject {
+//    @Published var searchRadius: Double
+//     let searchRepository: SearchRepositoryProtocol
+//    
+//    init(searchRepository: SearchRepositoryProtocol) {
+//        self.searchRadius = 10 // Valor por defecto
+//        self.searchRepository = searchRepository
+//    }
+//}
 
-class searchRepository: SearchRepositoryProtocol{
-    func search(whiRadius radius: Double) -> [String] {
-        return[""]
-    }
-}
+// Patron de diseño "Repository Pattern"
 
-class FirstScreenViewModel: ObservableObject {
-    @Published var searchRadius: Double
-    private let searchRepository: SearchRepositoryProtocol
+import Foundation
+class AirportViewModel: ObservableObject {
+    private let apiClient: APIClient
     
-    init(searchRepository: SearchRepositoryProtocol) {
-        self.searchRadius = 10 // Valor por defecto
-        self.searchRepository = searchRepository
-    }
-}
-
-struct FirstScreen: View {
-    @ObservedObject var viewModel: FirstScreenViewModel
-    init(viewModel: FirstScreenViewModel) {
-           self.viewModel = viewModel
-       }
+    @Published var airports: [Airport] = []
     
-    var body: some View {
-        VStack{
-            Slider(value: $viewModel.searchRadius, in: 1...100, step: 1)
-                .padding()
-            
-            Button(action: {
-                
-              //  let results = $viewModel.performSearch
-                // navigation tabBarController
-            }) {
-                Text("Buscar")
-            }
-            .padding()
-        }
+    init(apiClient: APIClient) {
+        self.apiClient = apiClient
+    }
+    
+    func fetchData(forCountry country: String) {
+       
+        apiClient.fetchData()
     }
 }
 

@@ -7,36 +7,36 @@
 
 import SwiftUI
 
-struct AirportListView: View {
-    @ObservedObject var viewModel: AirportViewModel
-    @State private var countrySearchText = ""
-    @State private var isMapScreenPresented = false // Nuevo estado para controlar la presentación de la pantalla del mapa
-  
-    var body: some View {
+struct searchView: View {
+ @State  var searchText = ""
+ 
+var body: some View {
         NavigationView {
             VStack {
-                TextField("Ingrese el país", text: $countrySearchText)
+                Text("BUSCAR AEROPUERTOS")
+                    .font(.title)
+                    
+                TextField("Ingrese el país", text: $searchText)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
                 
-             
-                Button(action: {
-                    viewModel.searchAirports(forCountry: countrySearchText)
-
-                    isMapScreenPresented = true
-                }) {
+                NavigationLink(destination: tabBarView(query: searchText)) {
                     Text("Buscar")
+                }
+              
+                   
                 }
                 .padding()
                 
-                NavigationLink(destination: tabBarView(), isActive: $isMapScreenPresented) {
-                    EmptyView()
-                }
+               
                 
             }
-            .padding()
-            .navigationTitle("Buscar Aeropuertos")
+          
         }
     }
-}
 
+struct ContentView_Previews: PreviewProvider{
+    static var previews: some View{
+        searchView(searchText: "")
+    }
+}

@@ -10,25 +10,18 @@
 import SwiftUI
 import MapKit
 
-struct MapView: UIViewRepresentable {
-    func makeUIView(context: Context) -> MKMapView {
-        MKMapView(frame: .zero)
-    }
-    
-    func updateUIView(_ uiView: MKMapView, context: Context) {
-      
-    }
-}
 
 struct tabBarView: View {
+    var query = ""
+    
     var body: some View{
         TabView{
-            mapContentView()
+            mapContentView(searchText: query)
                 .tabItem {
                     Image(systemName: "map.fill")
                     Text("mapa")
                 }
-            listView()
+            listView(searchText: query)
                 .tabItem {
                     Image(systemName: "square.fill")
                     Text("Lista")
@@ -38,18 +31,21 @@ struct tabBarView: View {
 }
 
 struct mapContentView: View {
+    @ObservedObject var viewModel = AirportViewModel()
+    @State var searchText = ""
+    
     var body: some View {
-        MapView()
-           // .edgesIgnoringSafeArea(.all)
+        MapViewControllerBridge(accesViewModel: viewModel )
+        .onAppear()  {
+                viewModel.fetchAirports(Country: searchText)
+            }
     }
 }
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        tabBarView()
+    struct tabBarList: View {
+       var body: some View {
+            tabBarView()
+        }
     }
-}
+    
+   
 
-#Preview {
-    mapContentView()
-}

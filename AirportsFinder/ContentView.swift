@@ -10,13 +10,14 @@ import SwiftUI
 
 
 struct ContentView: View {
-   
-    @StateObject var airportViewModel = AirportViewModel(apiClient: APIClient())
-    
     var body: some View {
-        NavigationView {
-            AirportListView(viewModel: airportViewModel)
-                .navigationTitle("Buscar Aeropuertos")
+      VStack {
+          searchView(searchText: "")
         }
+      .padding()
     }
+}
+
+#Preview {
+    ContentView()
 }
